@@ -1,6 +1,7 @@
 #pragma once
 
 #include "vulkan/vulkan.h"
+#include <vector>
 
 class Renderer
 {
@@ -16,11 +17,25 @@ private:
 	void _InitDevice();
 	void _DeInitDevice();
 
+	void _SetupDebug();
+	void _InitDebug();
+	void _DeInitDebug();
 
-	VkInstance					_instance				= nullptr;
-	VkDevice					_device					= nullptr;
-	VkPhysicalDevice			_gpu					= nullptr;
-	VkPhysicalDeviceProperties	_gpu_properties			= {};
+public:
 
-	uint32_t			_graphics_family_index	= 0;
+	VkInstance							_instance					= VK_NULL_HANDLE;
+	VkDevice							_device						= VK_NULL_HANDLE;
+	VkPhysicalDevice					_gpu						= VK_NULL_HANDLE;
+	VkQueue								_queue						= VK_NULL_HANDLE;
+	VkPhysicalDeviceProperties			_gpu_properties				= {};
+
+	uint32_t							_graphics_family_index		= 0;
+	std::vector<const char*>			_instance_layers;
+	std::vector<const char*>			_instance_extensions;
+	std::vector<const char*>			_device_layers;
+	std::vector<const char*>			_device_extensions;
+
+
+	VkDebugReportCallbackEXT			_debug_report				= VK_NULL_HANDLE;
+	VkDebugReportCallbackCreateInfoEXT	_debug_callback_create_info	= {};
 };
